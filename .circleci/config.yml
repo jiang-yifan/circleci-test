@@ -6,9 +6,11 @@ jobs:
   backend-build:
     docker:
       - image: circleci/node:10
-    working_directory: ~/backend
     steps:
       - checkout
+      - run:
+          name: Navigate to backend
+          command: cd backend
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -31,6 +33,8 @@ workflows:
       - backend-build
       - aws-ecr/build-and-push-image:
           account-url: AWS_ACCOUNT_URL
-          repo: AWS_ERC_REPO
+          repo: ${AWS_ERC_REPO}
           region: AWS_REGION
-          tag: CIRCLE_SHA1
+          tag: ${CIRCLE_SHA1}
+          requires:
+            - backend-build
