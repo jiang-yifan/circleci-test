@@ -30,7 +30,7 @@ workflows:
     jobs:
       - backend-build
       - aws-ecr/build-and-push-image:
-          account-url: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
-          repo: ${MY_APP_PREFIX}
-          region: ${AWS_REGION}
-          tag: ${CIRCLE_SHA1}
+          account-url: AWS_ACCOUNT_URL
+          repo: AWS_ERC_REPO
+          region: AWS_REGION
+          tag: CIRCLE_SHA1
