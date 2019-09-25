@@ -1,0 +1,34 @@
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@6.3.0
+
+jobs:
+  backend-build:
+    working_directory: ~/backend
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Build Backend
+          command: yarn build
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - backend-build:
+      - aws-ecr/build_and_push_image:
+          account-url: '${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com'
+          repo: '${MY_APP_PREFIX}'
+          region: '${AWS_REGION}'
+          tag: '${CIRCLE_SHA1}'
