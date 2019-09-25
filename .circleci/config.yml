@@ -8,7 +8,7 @@ jobs:
       - image: circleci/node:10
     working_directory: ~/circleci-test/backend
     steps:
-      - checkout
+      - checkout:
           path: ~/circleci-test
       - run:
           name: Navigate to backend
