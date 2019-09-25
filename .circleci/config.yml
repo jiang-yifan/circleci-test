@@ -28,7 +28,9 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - *
+            - Dockerfile
+            - dist
+            - node_modules
 
 workflows:
   build-and-deploy:
