@@ -4,6 +4,8 @@ orbs:
 
 jobs:
   backend-build:
+    docker:
+      - image: circleci/node:10
     working_directory: ~/backend
     steps:
       - checkout
@@ -26,7 +28,7 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - backend-build:
+      - backend-build
       - aws-ecr/build_and_push_image:
           account-url: '${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com'
           repo: '${MY_APP_PREFIX}'
