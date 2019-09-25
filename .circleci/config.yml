@@ -36,6 +36,6 @@ workflows:
           repo: ${AWS_ERC_REPO}
           region: AWS_REGION
           tag: ${CIRCLE_SHA1}
-          path: ~/circleci-test/backend
+          path: ~/backend
           requires:
             - backend-build
