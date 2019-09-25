@@ -8,8 +8,6 @@ jobs:
       - image: circleci/node:10
     working_directory: ~/circleci-test/backend
     steps:
-      - attach_workspace:
-          at: /workspace
       - checkout:
           path: ~/circleci-test
       - restore_cache:
@@ -43,6 +41,6 @@ workflows:
           repo: ${AWS_ERC_REPO}
           region: AWS_REGION
           tag: ${CIRCLE_SHA1}
-          workspace-root: /workspace/backend
+          workspace-root: /workspace
           requires:
             - backend-build
