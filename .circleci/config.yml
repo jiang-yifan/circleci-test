@@ -25,6 +25,9 @@ jobs:
       - run:
           name: Build Backend
           command: yarn build
+      - run:
+          name: Build worspace
+          command: mkdir -p /workspace
       - persist_to_workspace:
           root: /workspace
           paths:
