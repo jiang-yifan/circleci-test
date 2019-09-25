@@ -25,14 +25,10 @@ jobs:
       - run:
           name: Build Backend
           command: yarn build
-      - run:
-          name: Build worspace
-          command: mkdir -p /workspace
       - persist_to_workspace:
-          root: /workspace
+          root: .
           paths:
-            - backend/dist
-            - backend/node_modules
+            - *
 
 workflows:
   build-and-deploy:
@@ -44,6 +40,6 @@ workflows:
           repo: ${AWS_ERC_REPO}
           region: AWS_REGION
           tag: ${CIRCLE_SHA1}
-          workspace-root: /workspace
+          workspace-root: .
           requires:
             - backend-build
